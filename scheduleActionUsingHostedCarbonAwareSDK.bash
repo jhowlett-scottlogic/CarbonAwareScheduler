@@ -18,4 +18,4 @@ day=$(date -d "$timestamp" '+%d')
 month=$(date -d "$timestamp" '+%m')
 
 # echo "$minute $hour $day $month *"
-echo "56 13 08 11 *"
+echo "5 * * * *"
