@@ -1,7 +1,7 @@
 #!/bin/bash
 dateTime="$(date -d "1 day" +"%Y-%m-%dT%T+00:00")"
 
-response=$(curl "https://carbon-aware-api.azurewebsites.net/emissions/forecasts/current?location=ukwest&windowSize=10&dateEndAt=${dateTime}")
+response=$(curl -s "https://carbon-aware-api.azurewebsites.net/emissions/forecasts/current?location=ukwest&windowSize=10&dateEndAt=${dateTime}")
 
 optimalDataPoints=$(sed -E 's/.*("optimalDataPoints":\[\{[^}]*\}\]).*/\1/' <<< "$response")
 
@@ -17,4 +17,4 @@ day=$(date -d "$timestamp" '+%d')
 
 month=$(date -d "$timestamp" '+%m')
 
-echo "$minute $hour $day $month *" > schedule.txt
+echo "$minute $hour $day $month *"
