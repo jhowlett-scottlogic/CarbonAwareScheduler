@@ -29,6 +29,9 @@ jobs:
         run: |
            chmod +x ./scheduleActionUsingHostedCarbonAwareSDK.bash
            schedule=$(bash ./scheduleActionUsingHostedCarbonAwareSDK.bash)
-           cp ./scheduledPublish_template.yml .github/workflows/scheduledPublish.yml
+           cp -fr ./scheduledPublish_template.yml .github/workflows/scheduledPublish.yml
            sed -i -E "s|\\$\{SCHEDULE\}|$schedule|g" ".github/workflows/scheduledPublish.yml"
+           git add .
+           git commit -m "schedule workflow"
+           git push
         shell: bash
