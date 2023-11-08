@@ -1,23 +1,17 @@
 # This is a basic workflow to help you get started with Actions
 
-name: delayCalculator
+name: Publish Scheduler
 
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
+    types:
+      - closed
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
   build:
-    # The type of runner that the job will run on
+    if: github.event.pull_request.merged
     runs-on: ubuntu-latest
 
     # Steps represent a sequence of tasks that will be executed as part of the job
@@ -26,15 +20,27 @@ jobs:
       - uses: actions/checkout@v3
         with:
           token: ${{ secrets.WORKFLOW_TOKEN }}
+        
+      - name: config script & copy template
+        run: |
+           chmod +x ./scheduleActionUsingHostedCarbonAwareSDK.bash
+           cp -fr ./scheduledPublish_template.yml .github/workflows/scheduledPublish.yml
+        shell: bash
+
+      - name: config git
+        run: |
+           git config user.name "GitHub Actions Bot"
+           git config user.email "<>"
+        shell: bash
 
       - name: calculate delay
         run: |
-           chmod +x ./scheduleActionUsingHostedCarbonAwareSDK.bash
            schedule=$(bash ./scheduleActionUsingHostedCarbonAwareSDK.bash)
-           cp -fr ./scheduledPublish_template.yml .github/workflows/scheduledPublish.yml
            sed -i -E "s|\\$\{SCHEDULE\}|$schedule|g" ".github/workflows/scheduledPublish.yml"
-           git config user.name "GitHub Actions Bot"
-           git config user.email "<>"
+        shell: bash
+
+      - name: commit scheduled workflow
+        run: |
            git add .
            git commit -m "schedule workflow"
            git push
