@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: Scheduled Publish
+name: Scheduled Workflow
 
 # Controls when the workflow will run
 on:
@@ -21,8 +21,24 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.WORKFLOW_TOKEN }}
 
-      - name: run
+      - name: config git
         run: |
-           echo "this is where you would publish blog at lowest carbon intensity"
+           git config user.name "GitHub Actions Bot"
+           git config user.email "<>"
+        shell: bash
+
+      - name: do scheduled task
+        run: |
+           echo "this is where you would run workflow at lowest carbon intensity"
+        shell: bash
+
+      - name: delete workflow
+        run: |
+           rm .github/workflows/scheduledWorkflow.yml
+           git add .
+           git commit -m "delete scheduled workflow" || echo "No changes to commit"
+           git push
         shell: bash
