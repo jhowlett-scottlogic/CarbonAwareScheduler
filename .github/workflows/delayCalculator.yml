@@ -21,7 +21,7 @@ jobs:
         with:
           token: ${{ secrets.WORKFLOW_TOKEN }}
         
-      - name: config script & copy template
+      - name: config script & copy/overwrite template
         run: |
            chmod +x ./scheduleActionUsingHostedCarbonAwareSDK.bash
            cp -fr ./scheduledPublish_template.yml .github/workflows/scheduledPublish.yml
