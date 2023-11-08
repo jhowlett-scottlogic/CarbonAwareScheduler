@@ -31,6 +31,8 @@ jobs:
            schedule=$(bash ./scheduleActionUsingHostedCarbonAwareSDK.bash)
            cp -fr ./scheduledPublish_template.yml .github/workflows/scheduledPublish.yml
            sed -i -E "s|\\$\{SCHEDULE\}|$schedule|g" ".github/workflows/scheduledPublish.yml"
+           git config user.name "GitHub Actions Bot"
+           git config user.email "<>"
            git add .
            git commit -m "schedule workflow"
            git push
