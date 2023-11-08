@@ -22,7 +22,8 @@ A Proof of Concept for scheduling a GitHub Action Workflow based on the output o
     - You can still manually trigger using the the scheduledWorkflow workflow using   'workflow_dispatch:'
 
 # Problems
-1. Github hosted runners do not currnetly give their exact location. Github uses the following azure regions:
+1. Github hosted runners do not currnetly give their exact location. Github uses the following azure regions (https://github.com/orgs/community/discussions/24969):
+
     - East US (eastus)
     - East US 2 (eastus2)
     - West US 2 (westus2)
