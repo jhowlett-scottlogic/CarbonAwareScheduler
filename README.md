@@ -29,6 +29,7 @@ A Proof of Concept for scheduling a GitHub Action Workflow based on the output o
     - West US 2 (westus2)
     - Central US (centralus)
     - South Central US (southcentralus)
+   
    Should we take an average of all possible locations if using github hosted runners?
 
 2. Need to host our own version? Not sure what this hosted version is for, only reference to it is that it was used for a 2022 hackathon so may be taken down at any minute
