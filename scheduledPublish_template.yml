@@ -24,5 +24,5 @@ jobs:
 
       - name: run
         run: |
-           echo "here"
+           echo "this is where you would publish blog at lowest carbon intensity"
         shell: bash
