@@ -4,6 +4,8 @@ name: Publish Scheduler
 
 on:
   pull_request:
+    branches: 
+      - main
     types:
       - closed
 
