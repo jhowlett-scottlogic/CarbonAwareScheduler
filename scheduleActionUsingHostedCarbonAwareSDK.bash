@@ -5,6 +5,16 @@ response=$(curl "https://carbon-aware-api.azurewebsites.net/emissions/forecasts/
 
 optimalDataPoints=$(sed -E 's/.*("optimalDataPoints":\[\{[^}]*\}\]).*/\1/' <<< "$response")
 
-timestamp=$(sed -E 's/.*"timestamp":"([^"]*)".*/\1/' <<< "$optimalDataPoints")
+timestampString=$(sed -E 's/.*"timestamp":"([^"]*)".*/\1/' <<< "$optimalDataPoints")
 
-echo "the cleanest time to run the job in the next 24 hours for ukwest is: $timestamp"
+timestamp=$(date -d $timestampString)
+
+minute=$(date -d "$timestamp" '+%M')
+
+hour=$(date -d "$timestamp" '+%H')
+
+day=$(date -d "$timestamp" '+%d')
+
+month=$(date -d "$timestamp" '+%m')
+
+echo "$minute $hour $day $month *" > schedule.txt
