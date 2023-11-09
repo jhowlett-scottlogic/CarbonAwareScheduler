@@ -1,7 +1,19 @@
 #!/bin/bash
-dateTime="$(date -d "1 day" +"%Y-%m-%dT%T+00:00")"
 
-response=$(curl -s "https://carbon-aware-api.azurewebsites.net/emissions/forecasts/current?location=ukwest&windowSize=10&dateEndAt=${dateTime}")
+locationsArray=( "ukwest" )
+
+locations="location=${locationsArray[0]}"
+
+for value in "${locationsArray[@]:1}"
+do
+  locations+="&location=$value"
+done
+
+dataEndAt="dataEndAt=$(date -d "1 day" +"%Y-%m-%dT%TZ")"
+
+windowSize="windowSize=10"
+
+response=$(curl -G -s  "https://carbon-aware-api.azurewebsites.net/emissions/forecasts/current?$locations&$windowSize" --data-urlencode "$dataEndAt" )
 
 optimalDataPoints=$(sed -E 's/.*("optimalDataPoints":\[\{[^}]*\}\]).*/\1/' <<< "$response")
 
