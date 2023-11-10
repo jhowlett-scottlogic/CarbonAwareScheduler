@@ -31,7 +31,10 @@ jobs:
 
       - name: calculate optimal start time
         run: |
-           response=$(curl -G -s  "https://carbon-aware-api.azurewebsites.net/emissions/forecasts/current?location=ukwest&windowSize=10" --data-urlencode "dataEndAt=$(date -d "1 day" +"%Y-%m-%dT%TZ")" )
+
+           dataEndAt="dataEndAt=$(date -d "1 day" +"%Y-%m-%dT%TZ")"
+
+           response=$(curl -G -s  "https://carbon-aware-api.azurewebsites.net/emissions/forecasts/current?location=ukwest&windowSize=10" --data-urlencode "$dataEndAt" )
 
            optimalDataPoints=$(sed -E 's/.*("optimalDataPoints":\[\{[^}]*\}\]).*/\1/' <<< "$response")
 
