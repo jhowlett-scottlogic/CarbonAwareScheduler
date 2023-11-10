@@ -31,7 +31,21 @@ jobs:
 
       - name: calculate optimal start time
         run: |
-           schedule=$(bash ./scheduleWorkflowUsingHostedCarbonAwareSDK.bash)
+           response=$(curl -G -s  "https://carbon-aware-api.azurewebsites.net/emissions/forecasts/current?location=ukwest&windowSize=10" --data-urlencode "dataEndAt=$(date -d "1 day" +"%Y-%m-%dT%TZ")" )
+
+           optimalDataPoints=$(sed -E 's/.*("optimalDataPoints":\[\{[^}]*\}\]).*/\1/' <<< "$response")
+
+           timestampString=$(sed -E 's/.*"timestamp":"([^"]*)".*/\1/' <<< "$optimalDataPoints")
+
+           timestamp=$(date -d $timestampString)
+
+           minute=$(date -d "$timestamp" '+%M')
+           hour=$(date -d "$timestamp" '+%H')
+           day=$(date -d "$timestamp" '+%d')
+           month=$(date -d "$timestamp" '+%m')
+           
+           schedule="$minute $hour $day $month *"
+
            sed -i -E "s|\\$\{SCHEDULE\}|$schedule|g" ".github/workflows/scheduledWorkflow.yml"
         shell: bash
 
