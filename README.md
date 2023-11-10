@@ -2,7 +2,9 @@ A Proof of Concept for scheduling a GitHub Action Workflow based on the output o
 
 # How it works
 
-1. on a PR merge, the workflow 'delayCalculator.yml' runs
+Prerequisites: create personal access token named WORKFLOW_TOKEN that has workflow write access.
+
+1. on a PR merge, the workflow runs
 
     1. Sets correct permissions for bash script
     2. copy/overwrite the scheduledWorkflow_template.yml into the workflows/ folder
@@ -21,16 +23,4 @@ A Proof of Concept for scheduling a GitHub Action Workflow based on the output o
 # Notes:
     - You can still manually trigger using the the scheduledWorkflow workflow using   'workflow_dispatch:'
 
-# Problems
-1. Github hosted runners do not currnetly give their exact location. Github uses the following azure regions (https://github.com/orgs/community/discussions/24969):
-
-    - East US (eastus)
-    - East US 2 (eastus2)
-    - West US 2 (westus2)
-    - Central US (centralus)
-    - South Central US (southcentralus)
-   
-   Should we take an average of all possible locations if using github hosted runners?
-
-2. Need to host our own version? Not sure what this hosted version is for, only reference to it is that it was used for a 2022 hackathon so may be taken down at any minute
-
+### See issues for required work
