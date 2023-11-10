@@ -21,6 +21,8 @@ Prerequisites: create personal access token named WORKFLOW_TOKEN that has workfl
 
 
 # Notes:
-    - You can still manually trigger using the the scheduledWorkflow workflow using   'workflow_dispatch:'
+- You can still manually trigger using the the scheduledWorkflow workflow using   'workflow_dispatch:'
 
-### See issues for required work
+# Problems:
+- Requires paid for subscriptions of either ElectricityMaps API or WattTime API before it can forecast emission data
+- Instead of the hosted test version, it will have to clone the carbon-aware-sdk locally and then configure it with the credentials from account(s) above in the delayCalculator.yml workflow
