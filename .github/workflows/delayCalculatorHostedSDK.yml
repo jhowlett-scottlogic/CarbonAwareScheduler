@@ -17,9 +17,8 @@ jobs:
         with:
           token: ${{ secrets.WORKFLOW_TOKEN }}
         
-      - name: config script & copy/overwrite template
+      - name: copy/overwrite template workflow
         run: |
-           chmod +x ./scheduleWorkflowUsingHostedCarbonAwareSDK.bash
            cp -fr ./scheduledWorkflow_template.yml .github/workflows/scheduledWorkflow.yml
         shell: bash
 
@@ -29,9 +28,8 @@ jobs:
            git config user.email "<>"
         shell: bash
 
-      - name: calculate optimal start time
+      - name: calculate optimal start time and replace placeholder in template workflow
         run: |
-
            dataEndAt="dataEndAt=$(date -d "1 day" +"%Y-%m-%dT%TZ")"
 
            response=$(curl -G -s  "https://carbon-aware-api.azurewebsites.net/emissions/forecasts/current?location=ukwest&windowSize=10" --data-urlencode "$dataEndAt" )
